@@ -4,14 +4,13 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
+import { useNotification } from 'contexts/NotificationContext';
+
 import { Logo } from '../assets';
+import { Button } from 'components/ui/button';
 
 export default function Home() {
-  const session = useSession();
-
-  if (session.status === 'unauthenticated') {
-    redirect('/login');
-  }
+  const { requestPermission } = useNotification();
 
   return (
     <div className="flex flex-1 flex-col h-full justify-around items-center bg-black">
@@ -25,6 +24,10 @@ export default function Home() {
           <strong>&hearts;</strong> by CITi
         </p>
       </div>
+
+      <Button onClick={requestPermission}>
+        Request Notification Permission
+      </Button>
     </div>
   );
 }
